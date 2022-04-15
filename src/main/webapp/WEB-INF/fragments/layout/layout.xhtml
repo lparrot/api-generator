@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
+	<h:head>
+		<title>Api Generator</title>
+		<link rel="shortcut icon" href="#{resource['img/favicon.png']}" type="image/png"/>
+
+		<h:outputStylesheet library="css" name="app.css"/>
+		<h:outputStylesheet library="css" name="themes/default.css"/>
+
+		<h:outputStylesheet library="webjars" name="primeflex/3.1.3/primeflex.min.css"/>
+
+		<h:outputScript library="webjars" name="stomp-websocket/2.3.4/stomp.min.js"/>
+		<h:outputScript library="webjars" name="sockjs-client/1.5.1/sockjs.min.js"/>
+	</h:head>
+
+	<h:body>
+
+		<h:form>
+			<h:inputHidden value="#{sessionBean}"/>
+			<p:growl widgetVar="growl"/>
+		</h:form>
+
+		<div class="flex justify-content-between">
+			<div class="flex align-items-center">
+				<div>
+					<p:graphicImage width="64" height="64" library="img" name="logo.png"/>
+				</div>
+				<div class="ml-2">
+					<div class="font-bold text-2xl text-gray-700">API Generator</div>
+					<div class="text-lg text-gray-500">Générateur d'API conçu par des développeurs, pour des développeurs ...</div>
+				</div>
+			</div>
+
+			<div class="flex align-items-center">
+				<c:if test="#{p:remoteUser() != null}">
+					<h:outputText value="#{p:userPrincipal().principal.username}"/>
+				</c:if>
+
+				<div>
+					<h:form>
+						<p:commandButton action="/index.xhtml?faces-redirect=true" ajax="false" icon="pi pi-home" styleClass="rounded-button ui-button-outlined mx-1"/>
+
+						<c:choose>
+							<c:when test="#{p:remoteUser() == null}">
+								<p:commandButton action="/register.xhtml?faces-redirect=true" ajax="false" icon="pi pi-user-edit" styleClass="rounded-button ui-button-outlined mx-1"/>
+								<p:commandButton action="/login.xhtml?faces-redirect=true" ajax="false" icon="pi pi-sign-out" styleClass="rounded-button ui-button-outlined mx-1"/>
+							</c:when>
+							<c:otherwise>
+								<p:commandButton action="/profile.xhtml?faces-redirect=true" ajax="false" icon="pi pi-user" styleClass="rounded-button ui-button-outlined mx-1"/>
+								<p:commandButton action="#{loginBean.handleLogout()}" ajax="false" icon="pi pi-power-off" styleClass="rounded-button ui-button-outlined mx-1"/>
+							</c:otherwise>
+						</c:choose>
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+		<h:form rendered="#{p:remoteUser() != null}">
+			<p:menubar autoDisplay="false">
+				<p:submenu label="File" icon="pi pi-fw pi-file">
+					<p:submenu label="New" icon="pi pi-fw pi-plus">
+						<p:menuitem value="Bookmark" icon="pi pi-fw pi-bookmark"/>
+						<p:menuitem value="Video" icon="pi pi-fw pi-video"/>
+					</p:submenu>
+				</p:submenu>
+			</p:menubar>
+		</h:form>
+
+		<div class="m-2 p-2">
+			<ui:insert name="content"/>
+		</div>
+
+		<ui:insert name="dialog"/>
+
+		<p:dialog widgetVar="dialogSessionTimeout" header="Session expirée..." modal="true" closable="false" closeOnEscape="false">
+			<p class="p-m-0">Votre session est expirée.</p>
+			<f:facet name="footer">
+				<h:form>
+					<p:button value="OK" ajax="false" icon="pi pi-check text-green-500" outcome="login"/>
+				</h:form>
+			</f:facet>
+		</p:dialog>
+
+		<h:outputScript library="js" name="app.js"/>
+
+		<ui:insert name="javascript"/>
+	</h:body>
+</f:view>
+
+</html>

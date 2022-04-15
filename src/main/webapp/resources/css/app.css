@@ -1,0 +1,13 @@
+:root {
+	--font-size: .8rem;
+	--border-radius: .5rem;
+}
+
+body {
+	font-family: var(--font-family);
+	font-size: var(--font-size);
+}
+
+body .ui-widget {
+	font-size: var(--font-size);
+}

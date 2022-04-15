@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html" template="WEB-INF/fragments/layout/layout.xhtml">
+
+	<ui:define name="content">
+		<h:form prependId="false">
+			<div class="flex align-items-center justify-content-center">
+				<div class="surface-card p-4 border-500 border-1 border-round w-full lg:w-6">
+					<div class="text-center mb-5">
+						<p:graphicImage name="logo.png" library="img" alt="Image" height="50" styleClass="mb-3"/>
+						<div class="text-900 text-3xl font-medium mb-3">Connexion</div>
+						<span class="text-600 font-medium line-height-3">Vous n'avez pas de compte ?</span>
+						<p:commandLink action="/register.xhtml?faces-redirect=true" process="@this" class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Créez en un maintenant !</p:commandLink>
+					</div>
+
+					<div>
+						<p:staticMessage detail="#{loginBean.message.message}" severity="#{loginBean.message.severity}" rendered="#{loginBean.message != null}" styleClass="w-full mx-0 mb-3"/>
+
+						<div class="flex align-content-center">
+							<i class="pi pi-user mr-2"/>
+							<p:outputLabel for="form_email" value="Adresse e-mail" class="block text-900 font-medium mb-2"/>
+						</div>
+						<p:inputText id="form_email" value="#{loginBean.username}" styleClass="w-full mb-3"/>
+						<p:message for="form_email" styleClass="w-full mx-0 mb-3"/>
+
+						<div class="flex align-content-center">
+							<i class="pi pi-lock mr-2"/>
+							<p:outputLabel for="form_password" value="Mot de passe" class="block text-900 font-medium mb-2"/>
+						</div>
+						<p:inputText id="form_password" value="#{loginBean.password}" type="password" styleClass="w-full mb-3"/>
+						<p:message for="form_password" styleClass="w-full mx-0 mb-3"/>
+
+						<div class="flex align-items-center justify-content-between mb-6">
+							<div class="flex align-items-center">
+								<p:selectBooleanCheckbox id="rememberme" itemLabel="Se rappeler de moi" styleClass="mr-2"/>
+							</div>
+							<a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Mot de passe oublié ?</a>
+						</div>
+
+						<p:commandButton action="#{loginBean.handleLogin()}" ajax="false" value="Se connecter" styleClass="w-full"/>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
