@@ -1,9 +1,6 @@
 package fr.lauparr.apigenerator.entities;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,15 +13,18 @@ import java.util.Collection;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString(of = {"id", "username", "firstname", "lastname", "phone", "biography"})
 public class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	private String username;
-
 	private String password;
+	private String biography;
+	private String firstname;
+	private String lastname;
+	private String phone;
 
 	@Fetch(FetchMode.JOIN)
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
