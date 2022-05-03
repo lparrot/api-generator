@@ -4,6 +4,7 @@ import fr.lauparr.apigenerator.modules.security.CustomAuthenticationProvider;
 import fr.lauparr.apigenerator.modules.security.CustomAuthenticationSuccessHandler;
 import fr.lauparr.apigenerator.modules.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,9 +18,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.switchuser.SwitchUserFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
+import java.time.Duration;
+
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Value("${info.app.security.rememberme-token}")
+	private String securityRememberMeToken;
+	@Value("${info.app.security.rememberme-token-validity}")
+	private Duration securityRememberMeTokenValidity;
 
 	public static final String LOGIN_PAGE = "/login.xhtml";
 	public static final String INDEX_PAGE = "/index.xhtml";
@@ -66,6 +74,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.logoutSuccessUrl(LOGIN_PAGE + "?code=deconnexion")
 			.deleteCookies("JSESSIONID")
 			.permitAll();
+
+		http.rememberMe()
+			.rememberMeParameter("_spring_security_remember_me_input")
+			.key(securityRememberMeToken)
+			.tokenValiditySeconds(((Long) securityRememberMeTokenValidity.getSeconds()).intValue())
+			.useSecureCookie(true)
+			.userDetailsService(userDetailsService);
 
 		http.sessionManagement()
 			.maximumSessions(1)

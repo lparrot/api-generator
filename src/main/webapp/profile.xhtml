@@ -1,34 +1,46 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html" template="WEB-INF/fragments/layout/layout.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" template="WEB-INF/fragments/layout/layout.xhtml">
 	<ui:define name="content">
 		<div class="grid">
 			<div class="col-12 lg:col-2">
 				<div class="text-900 font-medium text-xl mb-3">Profil</div>
 				<p class="m-0 p-0 text-600 line-height-3 mr-3">Vous pouvez voir et modifier vous informations personnelles sur cette page</p>
 			</div>
-			<h:form class="col-12 lg:col-10">
+			<h:form class="col-12 lg:col-10" enctype="multipart/form-data">
 				<div class="grid formgrid ui-fluid">
 					<div class="field mb-4 col-12">
-						<p:outputLabel for="form_username" styleClass="font-medium">Adresse e-mail</p:outputLabel>
-						<p:inputText id="form_username" name="username" value="#{profileBean.utilisateur.username}"></p:inputText>
-					</div>
-					<div class="field mb-4 col-12 lg:col-6">
-						<p:outputLabel for="form_lastname" styleClass="font-medium">Nom</p:outputLabel>
-						<p:inputText id="form_lastname" name="lastname" value="#{profileBean.utilisateur.lastname}"></p:inputText>
-					</div>
-					<div class="field mb-4 col-12 lg:col-6">
-						<p:outputLabel for="form_firstname" styleClass="font-medium">Prénom</p:outputLabel>
-						<p:inputText id="form_firstname" name="firstname" value="#{profileBean.utilisateur.firstname}"></p:inputText>
+						<p:outputLabel for="form_username" styleClass="font-medium" value="Adresse e-mail"/>
+						<p:inputText id="form_username" name="username" value="#{profileBean.utilisateur.username}"/>
+						<p:message for="form_username" display="icon"/>
 					</div>
 					<div class="field mb-4 col-12">
-						<p:outputLabel for="form_phone" styleClass="font-medium">Numéro de téléphone</p:outputLabel>
-						<p:inputText id="form_phone" name="phone" value="#{profileBean.utilisateur.phone}"></p:inputText>
+						<p:outputLabel styleClass="font-medium" value="Avatar"/>
+						<div class="flex align-items-center">
+							<p:avatar rendered="#{not empty profileBean.avatar}" styleClass="mr-2" size="large" shape="circle">
+								<p:graphicImage value="#{profileBean.avatar}" stream="false" alt="Avatar" cache="false"/>
+							</p:avatar>
+							<p:fileUpload listener="#{profileBean.uploadAvatar}" auto="true" mode="simple" skinSimple="true" update="@parent">
+								<f:validateBean disabled="true"/>
+							</p:fileUpload>
+						</div>
+					</div>
+					<div class="field mb-4 col-12 lg:col-6">
+						<p:outputLabel for="form_lastname" styleClass="font-medium" value="Nom"/>
+						<p:inputText id="form_lastname" name="lastname" value="#{profileBean.utilisateur.lastname}"/>
+					</div>
+					<div class="field mb-4 col-12 lg:col-6">
+						<p:outputLabel for="form_firstname" styleClass="font-medium" value="Prénom"/>
+						<p:inputText id="form_firstname" name="firstname" value="#{profileBean.utilisateur.firstname}"/>
 					</div>
 					<div class="field mb-4 col-12">
-						<p:outputLabel for="form_biography" styleClass="font-medium">Biographie</p:outputLabel>
-						<p:inputTextarea id="form_biography" name="biography" value="#{profileBean.utilisateur.biography}"></p:inputTextarea>
+						<p:outputLabel for="form_phone" styleClass="font-medium" value="Numéro de téléphone"/>
+						<p:inputText id="form_phone" name="phone" value="#{profileBean.utilisateur.phone}"/>
+					</div>
+					<div class="field mb-4 col-12">
+						<p:outputLabel for="form_biography" styleClass="font-medium" value="Biographie"/>
+						<p:inputTextarea id="form_biography" name="biography" value="#{profileBean.utilisateur.biography}"/>
 					</div>
 					<div class="col-12">
-						<p:commandButton value="Enregistrer les modifications" action="#{profileBean.save()}" styleClass="w-auto" update="@form"></p:commandButton>
+						<p:commandButton value="Enregistrer les modifications" action="#{profileBean.save()}" styleClass="w-auto" update="@form"/>
 					</div>
 				</div>
 			</h:form>

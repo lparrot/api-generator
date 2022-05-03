@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 
 @Entity
@@ -19,21 +20,35 @@ public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@NotBlank
 	private String username;
+
 	private String password;
+
 	private String biography;
+
+	@NotBlank
 	private String firstname;
+
+	@NotBlank
 	private String lastname;
+
 	private String phone;
+
+	@Lob
+	private byte[] avatar;
 
 	@Fetch(FetchMode.JOIN)
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
 	private Profile profile;
 
 	@Builder
-	public User(String username, String password, Profile profile) {
+	public User(String username, String password, String firstname, String lastname, Profile profile) {
 		this.username = username;
 		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
 		this.profile = profile;
 	}
 

@@ -16,7 +16,9 @@ import javax.servlet.ServletException;
 import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 
-@Controller @RequestScoped public class LoginBean {
+@Controller
+@RequestScoped
+public class LoginBean {
 
 	@Autowired private SecuritySrv securitySrv;
 
@@ -26,7 +28,8 @@ import java.io.IOException;
 
 	@Getter @Setter private LoginMessageDto message;
 
-	@PostConstruct public void postConstruct() {
+	@PostConstruct
+	public void postConstruct() {
 		String code = Faces.getRequestParameter("code");
 		if (StringUtils.isNotBlank(code)) {
 			LoginCodeErreurEnum codeErreur = EnumUtils.getEnum(LoginCodeErreurEnum.class, code.toUpperCase());

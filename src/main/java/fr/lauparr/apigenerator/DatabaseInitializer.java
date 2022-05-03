@@ -37,12 +37,16 @@ public class DatabaseInitializer implements CommandLineRunner {
 
 		User root = User.builder()
 			.username("root")
+			.firstname("Laurent")
+			.lastname("Parrot")
 			.password(passwordEncoder.encode("123"))
 			.profile(profilAdministrateur)
 			.build();
 
 		User user = User.builder()
 			.username("user")
+			.firstname("Laurent")
+			.lastname("Parrot")
 			.password(passwordEncoder.encode("123"))
 			.profile(profilInvite)
 			.build();

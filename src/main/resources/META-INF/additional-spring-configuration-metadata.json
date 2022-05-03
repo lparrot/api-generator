@@ -1,0 +1,15 @@
+{
+	"properties": [
+		{
+			"name": "info.app.security.rememberme-token",
+			"type": "java.lang.String",
+			"description": "Token de sécurité utilisé pour le remember-me."
+		},
+		,
+		{
+			"name": "info.app.security.rememberme-token-validity",
+			"type": "java.time.Duration",
+			"description": "Durée du token de validité utilisé pour le remember-me."
+		}
+	]
+}
