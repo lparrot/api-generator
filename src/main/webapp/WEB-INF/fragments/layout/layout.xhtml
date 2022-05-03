@@ -16,16 +16,15 @@
 		<h:outputStylesheet library="css" name="themes/default.css"/>
 
 		<h:outputStylesheet library="webjars" name="primeflex/3.1.3/primeflex.min.css"/>
-
-		<h:outputScript library="webjars" name="stomp-websocket/2.3.4/stomp.min.js"/>
-		<h:outputScript library="webjars" name="sockjs-client/1.5.1/sockjs.min.js"/>
 	</h:head>
 
 	<h:body>
 
 		<h:form>
-			<h:inputHidden value="#{sessionBean}"/>
-			<p:growl widgetVar="growl"/>
+			<p:outputPanel>
+				<p:autoUpdate/>
+				<p:growl widgetVar="growl" globalOnly="true"/>
+			</p:outputPanel>
 		</h:form>
 
 		<div class="flex justify-content-between">
@@ -84,7 +83,7 @@
 			<p class="p-m-0">Votre session est expirée.</p>
 			<f:facet name="footer">
 				<h:form>
-					<p:button value="OK" ajax="false" icon="pi pi-check text-green-500" outcome="login"/>
+					<p:button value="OK" ajax="false" icon="pi pi-check text-green-500" outcome="/login"/>
 				</h:form>
 			</f:facet>
 		</p:dialog>
