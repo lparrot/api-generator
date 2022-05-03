@@ -3,6 +3,7 @@ package fr.lauparr.apigenerator.modules.account;
 import fr.lauparr.apigenerator.entities.User;
 import lombok.Getter;
 import lombok.Setter;
+import org.omnifaces.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,7 @@ public class ProfileBean implements Serializable {
 
 	public void save() {
 		this.utilisateur = profileSrv.save(this.utilisateur);
+		Messages.addGlobalInfo("Les informations ont bien été enregistrées.");
 	}
 
 }
